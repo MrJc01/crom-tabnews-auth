@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Demo tabnews-auth</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .section { margin-bottom: 20px; }
+    input, button { margin: 5px; padding: 8px; }
+    pre { background: #f4f4f4; padding: 10px; border: 1px solid #ddd; }
+  </style>
+</head>
+<body>
+  <h1>Demo tabnews-auth</h1>
+  <p>Teste as funções da biblioteca.</p>
+
+  <div class="section">
+    <h2>Login</h2>
+    <input type="email" id="email" placeholder="Email" value="mrj.crom@gmail.com">
+    <input type="password" id="password" placeholder="Senha" value="BxxU@PEMYpe7rJ2">
+    <button onclick="doLogin()">Login</button>
+    <pre id="loginResult"></pre>
+  </div>
+
+  <div class="section">
+    <h2>Perfil Público</h2>
+    <input type="text" id="username" placeholder="Username">
+    <button onclick="doGetProfile()">Buscar Perfil</button>
+    <pre id="profileResult"></pre>
+  </div>
+
+  <div class="section">
+    <h2>Validar Sessão</h2>
+    <input type="text" id="token" placeholder="Token de Sessão">
+    <button onclick="doValidateSession()">Validar</button>
+    <pre id="validateResult"></pre>
+  </div>
+
+  <script src="../src/tabnews-auth.js"></script>
+  <script>
+    async function doLogin() {
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+      const resultDiv = document.getElementById('loginResult');
+      try {
+        const session = await window.tabnewsAuth.login(email, password);
+        resultDiv.textContent = JSON.stringify(session, null, 2);
+        // Opcional: armazenar token em sessionStorage
+        sessionStorage.setItem('tabnews_token', session.token);
+        document.getElementById('token').value = session.token;
+      } catch (error) {
+        resultDiv.textContent = `Erro: ${error.message}`;
+      }
+    }
+
+    async function doGetProfile() {
+      const username = document.getElementById('username').value;
+      const resultDiv = document.getElementById('profileResult');
+      try {
+        const profile = await window.tabnewsAuth.getProfile(username);
+        resultDiv.textContent = JSON.stringify(profile, null, 2);
+      } catch (error) {
+        resultDiv.textContent = `Erro: ${error.message}`;
+      }
+    }
+
+    async function doValidateSession() {
+      const token = document.getElementById('token').value;
+      const resultDiv = document.getElementById('validateResult');
+      try {
+        const session = await window.tabnewsAuth.validateSession(token);
+        resultDiv.textContent = JSON.stringify(session, null, 2);
+      } catch (error) {
+        resultDiv.textContent = `Erro: ${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>

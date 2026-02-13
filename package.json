@@ -1,0 +1,20 @@
+{
+  "name": "tabnews-auth",
+  "version": "1.0.0",
+  "description": "Biblioteca JavaScript leve para autenticação via API do TabNews",
+  "main": "src/tabnews-auth.js",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "test:watch": "vitest --watch",
+    "build": "echo 'Build not needed for CDN distribution'",
+    "demo": "npx serve demo"
+  },
+  "devDependencies": {
+    "vitest": "^1.0.0",
+    "jsdom": "^23.0.0"
+  },
+  "keywords": ["tabnews", "auth", "javascript", "vanilla", "cdn"],
+  "author": "MrJc01",
+  "license": "MIT"
+}
